@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>杨辉三角可视化工具</title>
+    <!-- KaTeX (渲染 LaTeX) - 使用CDN确保字体文件正确加载 -->
+    <link rel="stylesheet" href="./Latex/katex.min.css">
+    <script defer src="./Latex/katex.min.js"></script>
+    <script defer src="./Latex/auto-render.min.js"></script>
+    <!-- Font Awesome (图标) -->
+    <link rel="stylesheet" href="./Latex/font-awesome.min.css">
+    <!-- 本地样式 -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>杨辉三角可视化工具</h1>
+        </header>
+
+        <main class="content">
+            <section class="triangle-section">
+                <!-- 将包含 SVG overlay（用于连线）与数字容器 -->
+                <div id="triangle-wrapper" class="triangle-wrapper">
+                    <svg id="connections-svg" class="connections-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+                    <div id="triangle-container" class="triangle-container"></div>
+                </div>
+
+                <!-- 二项式展开面板 -->
+                <div id="expansion-panel" class="expansion-panel">
+                    <h2><i class="fa-solid fa-square-root-variable"></i> 二项式展开</h2>
+                    <div id="expansion-content" class="katex-display">
+                        点击上方的数字查看公式
+                    </div>
+                </div>
+                <div id="fib-panel" class="panel">
+                    <div id="fibonacci-content" class="panel-content">
+                        <!-- 斐波那契数列内容将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+                <!-- 数学规律信息面板 -->
+                <div id="pattern-info-panel" class="panel">
+                    <h3>数学规律信息</h3>
+                    <div class="panel-content">
+                        <p>点击上方数学规律按钮，查看杨辉三角中隐藏的数学奥秘。</p>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="controls-container">
+                <div class="control-panel">
+                    <h2>控制面板</h2>
+                    <div class="controls">
+                        <div class="btn-row">
+                            <button id="add-row"><i class="fas fa-plus-circle"></i> 添加一行</button>
+                            <button id="remove-row"><i class="fas fa-minus-circle"></i> 减少一行</button>
+                        </div>
+
+                        <div class="btn-row">
+                            <button id="toggle-lines">显示连接线</button>
+                            <button id="toggle-notation">用组合数表示</button>
+                        </div>
+                        <div class="btn-row">
+                            <h4>数学规律展示</h4>
+                            <button id="clear-pattern-btn">清除规律</button>
+                            <button id="fibonacci-btn">斐波那契数列</button>
+                            <button id="natural-btn">自然数</button>
+                            <button id="triangular-btn">三角数</button>
+                            <button id="tetrahedral-btn">四面体数</button>
+                            
+                            <button id="toggle-symmetry" class="btn">
+                                <i class="fas fa-vertical-align-center"></i> 显示竖直对称线
+                            </button>
+                            <button id="toggle-sierpinski" class="btn">
+                                <i class="fas fa-caret-down"></i> 显示谢尔宾斯三角
+                            </button>
+                            <button id="toggle-row-sums" class="btn">
+                                <i class="fas fa-plus-circle"></i> 显示行总和
+                            </button>
+                            <button id="toggle-primes" class="btn">
+                                <i class="fas fa-star"></i> 显示素数高亮
+                            </button>
+                        </div>
+                        <label>
+                            行数：
+                            <input id="rows-input" type="number" min="1" max="30" value="6" />
+
+                        </label>
+                        <div class="btn-row">
+                            <button id="apply-rows">应用</button>
+                            <button id="reset-btn">重置</button>
+                            <button id="toggle-coeff">系数切换</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <h2>信息面板</h2>
+                    <div id="info-content" class="info-content">
+                        <div id="pattern-info-panel" class="pattern-info">
+                            <!-- 数学规律信息将通过JavaScript动态生成 -->
+                        </div>
+                        <div class="instructions">
+                            <h3>使用说明</h3>
+                            <ul>
+                                <li>点击格子查看该项的二项式展开与组合数公式。</li>
+                                <li>切换“用组合数表示”可将格子以 LaTeX 的表达式形式显示。</li>
+                                <li>显示连接线可观察每个元素如何由上层两个元素相加得到。</li>
+                            </ul>
+                            <h3>杨辉三角</h3>
+                            <ul>
+                                <li>杨辉三角是一个由数字构成的三角形阵列</li>
+                                <li>其最核心的规律是每个数等于其上方左右两数之和。</li>
+                                <li>这个看似简单的结构却蕴含着丰富的数学奥秘：</li>
+                                <li>杨辉三角的每一行都对应着二项式展开的系数，这一发现使得二项式展开成为了组合数学的基础。</li>
+                                <li>它的每一行都完美对称，对应着二项式展开的系数，同时也直观展示了组合数学中的基本性质。</li>
+                                <li>从概率统计到代数，杨辉三角都是一个强大而优美的数学模型。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            Yanghui Triangle Visualizer @Cjj write2025
+        </footer>
+    </div>
+
+    <!-- 本地脚本 -->
+    <script src="app.js" defer></script>
+</body>
+
+</html>
